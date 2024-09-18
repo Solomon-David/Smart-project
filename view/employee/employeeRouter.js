@@ -32,9 +32,11 @@ router.post('/signup', async (req, res) => {
       }  
     Employee.createUser(first_name, last_name, phone, password)
     .then(()=>{
+        console.log(first_name, last_name, phone, password);
         res.status(201).json({ message: 'Employee created successfully' });
     });
     } catch (error) {
+        console.log(error);
       res.status(500).json({ error: 'Internal server error' });
     }
   });
