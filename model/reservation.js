@@ -3,7 +3,7 @@ const { query } = require('./../db.js'); // Replace with your actual path to db.
 class Reservation {
   static async createReservation(guestId, roomNum, roomType, hotelCode, checkIn, checkOut) {
     try {
-      const [result] = await query('INSERT INTO reservation (guest_id, room_num, room_type, hotel_code, checkIn, checkOut) VALUES (?, ?, ?, ?, ?, ?)',
+      const [result] = await query('INSERT INTO RESERVATION (guest_id, room_num, room_type, hotel_code, checkIn, checkOut) VALUES (?, ?, ?, ?, ?, ?)',
        [guestId, roomNum, roomType, hotelCode, checkIn, checkOut]);
       return result;
     } catch (error) {
@@ -14,7 +14,7 @@ class Reservation {
 
   static async findByGuestId(guestId) {
     try {
-      const [rows] = await query('SELECT r.*, h.hotel_name FROM reservation r INNER JOIN hotel h ON r.hotel_code = h.hotel_code WHERE r.guest_id = ?', [guestId]);
+      const [rows] = await query('SELECT r.*, h.hotel_name FROM RESERVATION r INNER JOIN HOTEL h ON r.hotel_code = h.hotel_code WHERE r.guest_id = ?', [guestId]);
       return rows;
     } catch (error) {
       console.error('Error finding reservation by guest ID:', error);
@@ -33,7 +33,7 @@ class Reservation {
       }
       values.push(reservationId); // For the WHERE clause
 
-      const updateQuery = `UPDATE reservation SET ${fieldsToUpdate.join(', ')} WHERE id = ?`;
+      const updateQuery = `UPDATE RESERVATION SET ${fieldsToUpdate.join(', ')} WHERE id = ?`;
       const [result] = await query(updateQuery, values);
 
       if (result.affectedRows === 0) {
@@ -49,7 +49,7 @@ class Reservation {
 
   static async deleteReservation(reservationId) {
     try {
-      const [result] = await query('DELETE FROM reservation WHERE RES_NR = ?', [reservationId]);
+      const [result] = await query('DELETE FROM RESERVATION WHERE RES_NR = ?', [reservationId]);
       if (result.affectedRows === 0) {
         throw new Error('Reservation not found');
       }
@@ -62,7 +62,7 @@ class Reservation {
 
   static async findByReservationId(reservationId) {
     try {
-      const [rows] = await query('SELECT * FROM reservation WHERE id = ?', [reservationId]);
+      const [rows] = await query('SELECT * FROM RESERVATION WHERE id = ?', [reservationId]);
       return rows[0];
     } catch (error) {
       console.error('Error finding reservation by ID:', error);
