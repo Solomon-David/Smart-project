@@ -9,7 +9,7 @@ class Employee{
           
           console.log(first_name,last_name,phone,password);
           const result = await query('INSERT INTO EMPLOYEE(first_name, last_name, phone, password) VALUES (?, ?, ?, ?);', [first_name, last_name, phone, hashedPassword]);
-      
+          console.log(result);
           return result.insertId;
         } catch (error) {
           console.error('Error creating employee:', error);
