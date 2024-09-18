@@ -26,6 +26,7 @@ router.get("/signup", (req,res)=>{
 
 router.post('/signup', async (req, res) => {
     try {
+        console.log("Signing up");
       const { first_name, last_name, phone, password } = req.body;
       if (!first_name || !last_name || !phone || !password) {
         return res.status(400).json({ error: 'Missing required fields' });
