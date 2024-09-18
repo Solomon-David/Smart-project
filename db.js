@@ -2,10 +2,10 @@ const mysql = require('mysql2/promise');
 let connection;
 async function testConn() {
   connection = await mysql.createConnection({
-    host: 'localhost',
-    user: 'Smart',
-    password: 'Uchenna',
-    database: 'smart_hotel'
+    host: 'sql8.freemysqlhosting.net',
+    user: '	sql8732065',
+    password: 'UjhQ9FPcYl',
+    database: '	sql8732065'
   });
 
   try {
