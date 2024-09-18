@@ -59,7 +59,7 @@ router.post('/signup', async (req, res) => {
       res.redirect('/admin/dashboard');  // Assuming a separate admin dashboard route
     } catch (error) {
       console.error('Error logging in employee:', error);
-      res.status(500).json({ error: 'Internal server error' });
+      res.status(500).json({ error: error });
       next(error);
     }
   });
