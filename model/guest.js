@@ -25,7 +25,7 @@ class Guest {
   static async findByEmailAndPassword(email, password) {
   try {
     // this part is broken 
-    let user = await query('SELECT * FROM guest WHERE email = ? limit 1;', [email]);
+    let user = await query('SELECT * FROM GUEST WHERE email = ? limit 1;', [email]);
     user = user[0][0];
     
     if (!user || !(await bcrypt.compare(password, user.PASSWORD))) {
@@ -50,7 +50,7 @@ class Guest {
       }
       values.push(guestId); // For the WHERE clause
 
-      const updateQuery = `UPDATE guest SET ${fieldsToUpdate.join(', ')} WHERE id = ?`;
+      const updateQuery = `UPDATE GUEST SET ${fieldsToUpdate.join(', ')} WHERE id = ?`;
       const [result] = await query(updateQuery, values);
 
       if (result.affectedRows === 0) {
@@ -66,7 +66,7 @@ class Guest {
 
   static async findById(id) {
     try {
-      const [rows] = await query('SELECT * FROM guest WHERE guest_id = ?', [id]);
+      const [rows] = await query('SELECT * FROM GUEST WHERE guest_id = ?', [id]);
       return rows[0];
     } catch (error) {
       console.error('Error finding guest by id:', error);
