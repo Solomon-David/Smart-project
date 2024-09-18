@@ -20,7 +20,7 @@ class Employee{
       static async findByPhoneAndPassword(phone, password) {
         try {
             // this part is broken 
-            let user = await query('SELECT * FROM employee WHERE phone = ? limit 1;', [phone]);
+            let user = await query('SELECT * FROM EMPLOYEE WHERE phone = ? limit 1;', [phone]);
             user = user[0][0];
             console.log(user);
             if (!user || !(await bcrypt.compare(password, user.PASSWORD))) {
@@ -35,7 +35,7 @@ class Employee{
 
       static async findById(id) {
         try {
-          const [rows] = await query('SELECT * FROM employee WHERE employee_id = ?', [id]);
+          const [rows] = await query('SELECT * FROM EMPLOYEE WHERE employee_id = ?', [id]);
           return rows[0];
         } catch (error) {
           console.error('Error finding employee by id:', error);
