@@ -3,9 +3,9 @@ let connection;
 async function testConn() {
   connection = await mysql.createConnection({
     host: 'sql8.freemysqlhosting.net',
-    user: '	sql8732065',
+    user: 'sql8732065',
     password: 'UjhQ9FPcYl',
-    database: '	sql8732065'
+    database: 'sql8732065'
   });
 
   try {
