@@ -4,7 +4,7 @@ class Hotel {
 
   static async createHotel( employeeID, hotelName, numOfRooms, location) {
     try {
-      const [result] = await query('INSERT INTO hotel (EMPLOYEE_ID, HOTEL_NAME, NUM_ROOMS, LOCATION) VALUES (?, ?, ?, ?) ', [ employeeID, hotelName, numOfRooms, location]
+      const [result] = await query('INSERT INTO HOTEL (EMPLOYEE_ID, HOTEL_NAME, NUM_ROOMS, LOCATION) VALUES (?, ?, ?, ?) ', [ employeeID, hotelName, numOfRooms, location]
       );
       return result.insertId;
     } catch (error) {
@@ -16,7 +16,7 @@ class Hotel {
   
   static async getHotels() {
     try {
-      const [rows] = await query('SELECT * FROM hotel');
+      const [rows] = await query('SELECT * FROM HOTEL');
       console.log(rows)
       return rows;
     } catch (error) {
@@ -29,7 +29,7 @@ class Hotel {
 static async getHotelByName(hotelName) {
   try {
     const [rows] = await query(
-      'SELECT * FROM hotel WHERE HOTEL_NAME = ?',
+      'SELECT * FROM HOTEL WHERE HOTEL_NAME = ?',
       [hotelName]
     );
     return rows[0]; // Return the first hotel found or null if none found
@@ -42,7 +42,7 @@ static async getHotelByName(hotelName) {
 static async getHotelsAndRooms() {
   try {
     const hotels = await query(
-      'SELECT h.hotel_name, h.location, r.room_type, r.price FROM hotel h LEFT JOIN room r ON h.hotel_name = r.hotel limit 6'
+      'SELECT h.hotel_name, h.location, r.room_type, r.price FROM HOTEL h LEFT JOIN ROOM r ON h.hotel_name = r.hotel limit 6'
     );
     return hotels[0];
   } catch (error) {
@@ -64,7 +64,7 @@ static async deleteHotel(name){
 
 static async findHotels(filter,search){
   try{
-    let [hotels] = await query('SELECT h.hotel_name, h.location, r.room_type, r.price FROM hotel h LEFT JOIN room r ON h.hotel_name = r.hotel WHERE '+ filter+ "= ?", [search]);
+    let [hotels] = await query('SELECT h.hotel_name, h.location, r.room_type, r.price FROM HOTEL h LEFT JOIN ROOM r ON h.hotel_name = r.hotel WHERE '+ filter+ "= ?", [search]);
     return hotels;
   }
   catch(err){
