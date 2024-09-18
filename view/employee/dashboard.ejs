@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin | <%= `${user.FIRST_NAME} ${user.LAST_NAME}` %></title>
+  <link rel="stylesheet" href="./../styles/main.css">
+  <link rel="stylesheet" href="./../assets/css/all.css">
+</head>
+<body class="picbg">
+  <header></header>
+
+  <main>
+    <section class="reservations ">
+        <h4><%= `${user.FIRST_NAME} ${user.LAST_NAME}` %>'s Dashboard</h4>
+        <nav class="tabs">
+          <ul>
+            <li><a href="#findHotelsTab">Find Hotels</a></li>
+            <li><a href="#addHotelsTab">Add Hotels</a></li>
+          </ul>
+        </nav>
+
+
+        <div id="findHotelsTab">
+            <form id="searchForm" action="/admin/dashboard" method="get">
+              <select id="filterSelect" name="filter">
+                <option value="hotel_name">Hotel Name</option>
+                <option value="location">Location</option>
+                <option value="room_type">Room Type</option>
+              </select>
+              <input type="text" id="searchInput" name="search" placeholder="Search">
+              <button type="submit" id="searchButton">Search</button>
+            </form>
+          
+            <table>
+              <thead>
+                <tr>
+                  <th>Hotel</th>
+                  <th>Room Types</th>
+                  <th>Location</th>
+                  
+                </tr>
+              </thead>
+              <tbody>
+                <% hotels.forEach(hotel => { %>
+                  <tr>
+                    <td data-hotel-name="<%= hotel.hotel_name %>"><%= hotel.hotel_name %></td>
+                    <td><%= hotel.room_type %></td>
+                    <td><%= hotel.location %></td>
+                    <td><button class="deleteButton">Delete</button></td>
+                  </tr>
+                <% }); %>
+              </tbody>
+            </table>
+          </div>
+
+      <div id="addHotelsTab">
+        <form id="addHotelForm">
+          <h2>Add Hotel</h2>
+          <div class="fields">
+          <fieldset>
+            <label for="hotelName">Hotel Name:</label>
+            <input type="text" id="hotelName" name="hotelName" required>
+          </fieldset>
+          <fieldset>
+            <label for="location">Location:</label>
+            <input type="text" id="location" name="location" required>
+          </fieldset>
+        </div>
+        <div class="fields">
+          <fieldset>
+            
+            <button type="button" id="addRoomTypeButton">Add Rooms</button>
+            <div id="roomTypeFields">
+          </div>
+          </fieldset>
+        </div>
+        <button type="submit">Add Hotel</button>
+
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <%- include("./../partials/footer.ejs") %>
+
+  <script>
+
+   // Add delete button functionality
+const deleteButtons = document.querySelectorAll('.deleteButton');
+deleteButtons.forEach(button => {
+  button.addEventListener('click', (event) => {
+    const   
+ row = button.parentNode.parentNode;
+    const hotelName = row.querySelector('td:nth-child(1)').getAttribute('data-hotel-name');
+
+    // Send a DELETE request to delete the hotel
+    alert(`You are about to delete ${ hotelName}`)
+    fetch(`/admin/delete-hotel/${encodeURIComponent(hotelName)}`, {
+      method: 'DELETE'
+    })
+      .then(response => {
+        if (response.ok) {
+          row.remove();
+          alert('Hotel deleted successfully');
+        } else {
+          console.error('Error deleting hotel:', response.statusText);
+        }
+      })
+      .catch(error => {
+        console.error('Error deleting hotel:', error);
+      });
+  });
+});
+    // Tab navigation
+    const tabs = document.querySelectorAll('.tabs li a');
+    const tabContent = document.querySelectorAll('.reservations > div');
+
+    tabs.forEach(tab => {
+      tab.addEventListener('click', (event) => {
+        event.preventDefault();
+        const tabContentId = tab.getAttribute('href');
+        tabs.forEach(tab => tab.classList.remove('active'));
+        tab.classList.add('active');
+        tabContent.forEach(content => content.style.display = 'none');
+        document.querySelector(tabContentId).style.display = 'block';
+      });
+    });
+
+    // Initial tab selection
+    tabs[0].click();
+
+    const addRoomTypeButton = document.getElementById('addRoomTypeButton');
+    const roomTypeFields = document.getElementById('roomTypeFields');
+
+    addRoomTypeButton.addEventListener('click', () => {
+      const roomTypeField = document.createElement('div');
+      roomTypeField.innerHTML = `
+        
+        <input type="text" name="roomTypes[]" placeholder="Type" required>
+        <input type="number" name="roomPrice[]" placeholder="Price" required>
+        <input type="number" name="roomNumStart[]" placeholder="First Room" required>
+        <input type="number" name="roomNumEnd[]" placeholder="Last Room" required>
+        <button type="button" class="removeRoomTypeButton">X</button>
+      `;
+      roomTypeFields.appendChild(roomTypeField);
+
+      // Add event listener to the remove button
+      const removeButton = roomTypeField.querySelector('.removeRoomTypeButton');
+      removeButton.addEventListener('click', () => {
+        roomTypeField.remove();
+      });
+    });
+
+    // Add event listener to the addHotelForm
+addHotelForm.addEventListener('submit', async (event) => {
+  event.preventDefault();
+
+  // Collect data from the form
+  const hotelName = document.getElementById('hotelName').value;
+  const location = document.getElementById('location').value;
+  const roomTypes = [];
+  const roomPrice = [];
+  const roomNumStart = [];
+  const roomNumEnd = [];
+
+  // Collect room type and room number data from the dynamically added fields
+  const roomTypeFields = document.querySelectorAll('#roomTypeFields div');
+  roomTypeFields.forEach(field => {
+    const roomPriceInput = field.querySelector('input[name="roomPrice[]"]');
+    const roomTypeInput = field.querySelector('input[name="roomTypes[]"]');
+    const roomNumStartInput = field.querySelector('input[name="roomNumStart[]"]');
+    const roomNumEndInput = field.querySelector('input[name="roomNumEnd[]"]');
+
+    if (roomTypeInput && roomNumStartInput && roomNumEndInput && roomPrice) {
+      roomTypes.push(roomTypeInput.value);
+      roomNumStart.push(roomNumStartInput.value);
+      roomNumEnd.push(roomNumEndInput.value);
+      roomPrice.push(roomPriceInput.value);
+    }
+  });
+
+  // Send the data to the server
+  try {
+    const response = await fetch('/admin/create_hotel/', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ hotelName, location, roomPrice, roomTypes, roomNumStart, roomNumEnd })
+    });
+
+    if (response.ok) {
+      alert('Hotel added successfully!');
+      window.location.href = "./../admin/dashboard"; // Reload the page to show the updated list
+    } else {
+      console.error('Error adding hotel:', response.statusText);
+      alert('Error adding hotel. Please try again.');
+    }
+  } catch (error) {
+    console.error('Error adding hotel:', error);
+    alert('Error adding hotel. Please try again.');
+  }
+});
+  </script>
+</body>
+</html>

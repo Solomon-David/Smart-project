@@ -1,0 +1,87 @@
+<header>
+    <div class="left">
+        <span class="fas fa-bars" id="menu" >
+        </span>
+        <!-- Navigation menu -->
+        <nav class="show" id="nav">
+            <div class="head">
+                <span class="fas fa-arrow-left" id="arrow" >
+                </span>
+            </div>
+            <!-- 
+                TODO    
+                fix the menu so that it 
+                a. set the links of the menu using an array
+                b. highlights the currently selected routed
+                
+             -->
+            <ul id="menuContainer">
+                <!-- <li><a href="/dashboard">dashboard</a></li>
+                <li><a href="/booking">book a room</a></li> -->
+            </ul>
+        </nav>    
+    </div>
+    <div class="center"> <span>Smart Hotels</span></div>
+    <div class="right">
+        <span>
+            <span class="fas fa-user"></span>
+            <span>Account</span>
+            <span class="fas fa-caret-up"></span>
+            <span class="fas fa-caret-down"></span>
+        </span>
+<ul id="account_ops">
+            <li>Sign Up</li>
+            <li>Login</li>
+        </ul>
+
+    </div>
+</header>
+
+<script>
+    let menu=document.querySelector("#menu");
+    let arrow=document.querySelector("#arrow");
+    let nav = document.querySelector("#nav");
+    
+    menu.addEventListener("click", openMenu);
+    arrow.addEventListener("click", closeMenu);
+
+    function toggle(){
+    }
+
+    function openMenu(){
+    menu.classList.toggle("open");
+   nav.classList.toggle("show");
+}
+
+function closeMenu(){
+    nav.classList.toggle("show");
+    setTimeout(function(){
+        menu.classList.toggle("open");
+    },600);
+
+    }
+
+    //code to manage menu items
+    const menuItems = [
+  { label: 'dashboard', link: '/dashboard' },
+  { label: 'book a room', link: '/booking' }
+];
+
+const menuContainer = document.getElementById('menuContainer');
+const currentUrl = window.location.pathname;
+
+menuItems.forEach(item => {
+  const li = document.createElement('li');
+  const a = document.createElement('a');
+  a.href = item.link;
+  a.textContent = item.label;
+  li.appendChild(a);
+
+  if (item.link === currentUrl) {
+    li.classList.add('active-route');
+  }
+
+  menuContainer.appendChild(li);
+});
+
+</script>

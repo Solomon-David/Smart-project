@@ -1,0 +1,62 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Log in | Smart Hotels </title>
+    <link rel="stylesheet" href="./../styles/main.css">
+    <link rel="stylesheet" href="./../assets/css/all.css">
+</head>
+<body class="picbg">
+    <header></header>
+    <div class="form_cont info">
+        <form method="post">
+        <div class="caption"><span>login</span> to your account</div>
+        
+        <div class="fields">
+           
+            <fieldset class="email">
+                <label for="email">Email</label>
+                <input type="email" name="email" required/>
+            </fieldset>
+
+            <fieldset class="password">
+                <label for="password">Password</label>
+                <div>
+                    <input type="password" name="password" required/>
+                    <button type="button" class="fa fa-eye-slash"></button>
+                </div>
+            </fieldset>
+            
+        </div>
+
+        <div class="controls">
+            <input type="submit" value="Login">
+        </div>
+        </form>
+    </div>
+
+    <%- include("partials/footer.ejs") %>
+
+    <script>
+        var password=document.querySelector(".password input");
+        var eye=document.querySelector(".password .fa");
+
+        eye.addEventListener("click", function(){
+            if(eye.classList.contains("fa-eye-slash")){
+                eye.classList.remove("fa-eye-slash");
+                eye.classList.add("fa-eye");
+                password.setAttribute("type", "text");
+            }
+            else{
+                eye.classList.add("fa-eye-slash");
+                eye.classList.remove("fa-eye");
+                password.setAttribute("type", "password");
+            }
+        })
+    </script>
+</body>
+
+
+</html>

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include("partials/head.ejs") %>
+</head>
+<body class="picbg">
+    <%- include("partials/header.ejs") %>
+    <main>
+        <section class="reservations">
+            <h4><%= `${user.FIRST_NAME} ${user.LAST_NAME}` %>'s' reservations</h4>
+            <% if (reservations.length == 0) { %>
+                <p>
+                    You have no reservations
+                </p>
+            <% } else { %>
+                <table>
+                    <tr>
+                        <th>Reservation No</th>
+                        <th>Hotel</th>
+                        <th>Room Type</th>
+                        <th>Room Number</th>
+                        <th >Check In</th>
+                        <th >Check Out</th>
+                        <th>Action</th>
+                    </tr>
+                    <% for (let reservation of reservations) { %>
+                        <tr>
+                            <td><%= reservation.RES_NR %></td>
+                            <td><%= reservation.hotel_name %></td>
+                            <td><%= reservation.ROOM_TYPE %></td>
+                            <td><%= reservation.ROOM_NUM %></td>
+                            <td class="checkIn"><%= reservation.CHECKIN.toISOString().slice(0, 10) %></td>
+                            <td class="checkOut"><%= reservation.CHECKOUT.toISOString().slice(0, 10) %></td>
+                            <td>
+                                <button class="bookbtn" data-reservation-id="<%= reservation.RES_NR %>">cancel</button>
+                            </td>
+                        </tr>
+                    <% } %>
+                </table>
+            <% } %>
+        </section>
+    </main>
+    <%- include("partials/footer.ejs") %>
+    <script>
+        const cancelButtons = document.querySelectorAll('.bookbtn');
+        cancelButtons.forEach(button => {
+            button.addEventListener('click', async (event) => {
+                const reservationId = event.target.dataset.reservationId;
+                const confirmation = confirm(`Are you sure you want to cancel reservation number ${reservationId}?`);
+                if (confirmation) {
+                    try {
+                        const response = await fetch(`/reservation/${reservationId}`, {
+                            method: 'DELETE'
+                        });
+                        if (response.ok) {
+                            alert('Reservation canceled successfully');
+                            location.reload();
+                        } else {
+                            alert('Error canceling reservation: ' + response.statusText);
+                        }
+                    } catch (error) {
+                        alert('Error canceling reservation: ' + error.message);
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome To Smart Hotels</title>
+    <link rel="stylesheet" href="/styles/main.css"/>
+    <link rel="stylesheet" href="/assets/css/all.css">
+</head>
+<body class="picbg">
+    <%- include("partials/header.ejs") %>
+
+    <main>
+
+        <!-- identifying user  -->
+        <section class="user">
+            <p class="greeting">hello, <span><%= name %></span></p>
+        </section>
+
+    <!-- search -->
+    
+    <section class="search">
+        <form method="post">
+            <h3>select a room type</h3>
+            <fieldset class="find">
+                        <select >
+                            <% for (let hotel of hotels) { %>
+                            <option value="<%= hotel %>"> <%=hotel %></option>
+                            <% } %>
+                        </select>
+            </fieldset>
+            
+            <% if (chosen && rooms) {%>
+            <table class="details">
+               <p>
+                <%= chosen.HOTEL_NAME %> Suites
+                </p>
+                <% if (rooms.length == 0) {%>
+                    <p>
+                        no rooms available.
+                    </p>
+                <% } else { %>
+                    <tr class="head">
+                        <td>
+                            suites
+                    </td>
+                    
+                    <td>
+                        price (<del>N</del>)
+                    </td>
+
+                    <td>
+                        &emsp;
+                    </td>
+                </tr>
+                
+                    <% for (let room of rooms) { %>
+                        <tr>
+                           <td><%= room.ROOM_TYPE %></td> 
+                           <td><%= room.PRICE %> </td> 
+                           <td>
+                                <button type="button" class="bookbtn" 
+                                onclick="booked('<%= room.ROOM_ID %>', '<%= JSON.stringify(chosen) %>', '<%=room.ROOM_TYPE %>', '<%=room.PRICE %>', '<%= JSON.stringify(room.ROOM_NR) %>')">Book Now</button>
+                            </td> 
+                        </tr>
+                        <% } %>
+                    
+                    <% } %>
+                </table>
+                <% } %>
+            </form>
+    </section>
+
+    <dialog id="bookingDialog">
+        <form>
+          <p>You booked a <span id="roomType"></span> room, <span id="roomNumber"></span>, from <span id="hotel"></span> hotels for N<span id="price"></span> per day</p>
+          
+          <div>
+              <fieldset>
+                  <label for="checkIn">Check-in:</label>
+                  <input type="date" id="checkIn" name="checkIn">
+              </fieldset>
+              <fieldset>
+                  <label for="checkOut">Check-out:</label>
+                  <input type="date" id="checkOut" name="checkOut">
+              </fieldset>
+          </div>
+      
+          <div>
+              <button type="submit">Submit</button>
+              <button type="button" onclick="close()">Close</button>
+          </div>
+        </form>
+      </dialog>
+    
+</main>
+    
+   <%- include("partials/footer.ejs") %>
+
+   <script >
+       
+       var form=document.querySelector("form");
+       var search=document.querySelector(".find select");
+       var dialog = document.getElementById('bookingDialog');
+
+        
+        search.addEventListener("change", function(){
+            if(search.value!=""){
+                form.setAttribute("action", `/booking/${search.value}`);
+                form.submit();
+            }
+        });
+
+       function booked(roomid, hotel, type,price, rooms){
+        hotel = JSON.parse(hotel);
+        rooms = JSON.parse(rooms);
+        console.log(rooms);
+        console.log(hotel);
+        let roomnum=rooms[Math.floor(Math.random() * rooms.length)];
+
+        dialog.querySelector('#roomType').textContent = type;
+        dialog.querySelector('#roomNumber').textContent = roomnum;
+        dialog.querySelector('#hotel').textContent = hotel.HOTEL_NAME;
+        dialog.querySelector('#price').textContent = price;
+        let checkIn=dialog.querySelector("#checkIn").value;
+        let checkOut=dialog.querySelector("#checkOut").value;
+        dialog.showModal();
+        dialog.querySelector('button[type="button"]').addEventListener('click', () => {
+            dialog.close(); 
+        });
+
+        dialog.querySelector("form").addEventListener("submit", async function(event){
+            event.preventDefault();
+            try {
+                const data = {
+                    roomnum,
+                    type,
+                    code:hotel.HOTEL_CODE,
+                    checkIn:dialog.querySelector("#checkIn").value,
+                    checkOut:dialog.querySelector("#checkOut").value,
+                    
+                }
+                console.log(data);
+                const response = await fetch(`/book`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                });
+
+                if (response.ok) {
+                    const responseData = await response.json();
+                    console.log(responseData); // Handle successful signup, e.g., redirect to login page
+                    alert("Success!!!") // Replace with your actual login page URL
+                    dialog.close();
+                } else {
+                    const errorData = await response.json();
+                    console.error(errorData);
+                    // Handle error, e.g., display error message to user
+                    alert(errorData.message);
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                // Handle network or other errors
+            }
+   })
+  
+       }
+    </script>
+</body>
+</html>
+
+<!-- 
+    
+ -->

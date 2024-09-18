@@ -1,0 +1,586 @@
+:root{
+    --transparent: #7777;
+    --border: #fff9;
+    --border-width:0.5px;
+    --text-color:#fff;
+    --img: url("./../assets/bg.webp");
+    font-size: 16pt;
+    color:var(--text-color);
+    text-transform: capitalize;
+    --black:#333;
+}
+
+.picbg{
+    background-color:rgba(0,0,0,0);
+    background-image: var(--img);
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+body{   
+    position:relative;
+    width:98vw;
+    height: 96vh;
+    display:grid;
+    grid-template-rows: 1fr 4fr 1fr;
+    align-content: center;
+    padding:2vh 1vw;
+    margin:0;
+}
+
+header,footer{
+    display: flex;
+    flex-direction: row;
+    color:var(--text-color);
+}
+
+header{
+    width:98vw;
+    justify-content: space-between;
+}
+
+header>div{
+    border-radius: 5px;
+    padding:0.1% 0.5%;
+    display: flex;
+    align-items: center;
+    justify-content: start;
+}
+
+.center{
+    display: flex;
+    flex-direction: column;
+    padding:0.5% 0.5%;
+}
+
+.center span{
+    font-weight: bold;
+}
+
+footer{
+    border:var(--border-width) solid var(--border);
+    border-radius: 10px;
+    left:10vw;
+    width: 80vw;
+    padding:0% 0.01%;
+    background-color: var(--transparent);
+    display: flex;
+    justify-content: center;
+    bottom:1vh;
+    position:absolute;
+    margin:auto;
+    justify-self: center;
+}
+
+line{
+    stroke-width: 3px;
+    stroke: var(--text-color);
+}
+
+ .open, .open::before{
+    visibility: hidden;
+}
+
+#menu, #arrow{
+    align-self: flex-start;
+}
+
+.active-route a{
+    background-color:white;
+    color:var(--transparent);
+    border-radius:5px;
+    padding:0.25vw 0.5vw;
+}
+
+/* for accounts */
+.right{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+#account_ops{
+    visibility: hidden;
+    list-style: none;
+     margin-top:0;
+     display: flex;
+     flex-direction: column;
+     background-color: var(--transparent);
+}
+
+#account_ops a{
+    color:var(--text-color);
+    text-decoration: none;
+}
+
+#account_ops a:hover{
+    background-color: var(--text-color);
+    color:var(--transparent);
+}
+
+.right:hover #account_ops{
+    visibility: visible;
+}
+
+.fa-caret-up::before{
+    display: inline;
+}
+
+.fa-caret-down::before{
+    display: none;
+}
+
+.right:hover .fa-caret-up::before{
+    display: none;
+}
+.right:hover .fa-caret-down::before{
+    display: inline;
+}
+
+/* for nav bar */
+#nav{
+    transition: transform 0.5s, display 0s;
+    top:1vh;
+    display: block;
+    width:20vw;
+    position:fixed;
+    padding:2vh 0.1vw;
+    background-color: var(--transparent);
+    border:1px solid var(--border);
+    left:1vw;
+    border-radius:15px;
+    z-index: 2;
+    transform-origin: 0 0;
+}
+
+#nav.show{
+    transition: transform 0.5s;
+    transform: rotateY(90deg);
+}
+
+#nav ul{
+    list-style: none;
+}
+
+#nav li{
+    margin:5% auto;
+}
+
+#nav a:not(.active-route a){
+    color:white;
+    text-decoration: none;    
+}
+
+#nav .head{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    padding:0 5%;
+}
+
+#arrow,#menu {
+    border-radius: 5px;
+    padding:0.1rem;
+    border:1px solid var(--text-color);
+    font-size: 1.5rem;
+}
+
+/* for signup */
+.caption{
+    font-size: 0.9rem;
+}
+
+.caption::first-letter{
+    text-transform: uppercase;
+}
+
+.caption span{
+    font-weight: bold;
+}
+
+.form_cont form{
+    height:65%;
+    position:absolute;
+    top:5%;
+    bottom:20%;
+    border-radius: 10px;
+    border:var(--border-width) solid var(--border);
+    background-color: var(--transparent);
+    display: grid;
+    grid-template-rows: 1fr 3fr 1fr;    
+    align-items: center;
+    justify-items: center;
+    padding: 1% 2% 1.5% ;
+}
+
+.form_cont:not(.info) form{
+    width: 60%;
+     left:20%;
+}
+
+.fields{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 5%;
+}
+
+.fields fieldset{
+    border:none;
+    display: flex;
+    flex-direction: column;
+    align-items: baseline;    
+}
+
+.fields label{
+  font-size: 14pt;
+}
+
+.fields input{
+    border:none;
+    border-radius:  10px;
+    padding:6%;
+    width:90%;
+}
+
+.info .controls input{
+    width: 90%;
+}
+
+ .info .fields{
+    display: flex;
+    flex-direction: column;
+}
+
+.info form{
+    width: 20%;
+    left: 40%;
+}
+
+.password{
+    position: relative;
+}
+
+.password div{
+    display: flex;
+}
+
+.password .fa, #searchbtn{
+    position: absolute;
+    right:10%;
+    bottom:30%;
+    border: none;
+    background-color: transparent;
+}
+
+.controls{
+    width:100%;
+    display: flex;
+    justify-content: center;
+}
+
+.controls input{
+    border-radius: 10px 0px 10px 0px;
+    border:0.5px solid black;
+    padding:1%;
+    width:60%;
+    background-color: #fff;
+    color: black;
+    font-size: 0.8rem;
+}
+
+/* For booking */
+section{
+    width:100%;
+    display: grid;
+    justify-content: center;
+    margin:1% auto;
+}
+
+.greeting span{
+    font-weight: bold;
+}
+
+.search form, .reservations{    
+   background-color: var(--transparent);
+    border-radius: 5px; 
+    border:1px solid var(--border);
+    text-align: center;
+    padding:1em;
+    position: relative;
+}
+
+.search form{
+    width:100%;
+    padding:5%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.search p{
+    margin: 0 0 5%;    
+}
+
+.find{
+    position: relative;
+    border:none;    
+}
+
+.find select{
+    width:100%;
+    padding:5px;
+    border-radius: 5px;
+}
+
+.head{
+    font-weight: bold;
+}
+
+.bookbtn{
+    background-color:white;
+    color: black;
+    border:1px solid white;
+    padding:5%;
+    border-radius: 5px;
+}
+
+.reservations{
+    width:fit-content;
+}
+
+.checkIn, .checkOut{
+    font-size: 0.9em;
+}
+
+.reservations table {    
+   border-spacing: 1rem;
+    text-align: center;
+}
+
+.dates{
+    font-weight: bold;
+    font-size: 0.8em;
+}
+
+/* for dialog */
+#bookingDialog form{
+    display:flex;
+    flex-direction: column;
+    width:40vw;
+    text-transform: none;
+}
+
+#bookingDialog div{
+    display: flex;
+}
+
+#bookingDialog fieldset{
+    display: grid;
+    grid-template-rows: repeat(1fr);
+}
+
+/* Find Hotels section */
+#findHotelsTab {
+    display: none; /* Initially hidden */
+  }
+  
+  #searchForm {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  #searchForm select, #searchForm input {
+    border-radius: 5px;
+    padding: 10px;
+    margin-right: 10px;
+  }
+  
+  #searchForm button {
+    border-radius: 5px;
+    padding: 10px 15px;
+    background-color: var(--black);
+    color: white;
+    cursor: pointer;
+  }
+
+  #findHotelsTab{
+    margin-top:5%;
+    display:grid;
+    grid-template-rows: 1fr 3fr;
+}
+
+
+
+#findHotelsTab table {
+    border-collapse: collapse;
+    width: 100%;
+    border-spacing: initial;
+    text-align: initial;
+  }
+  
+#findHotelsTab table th, #findHotelsTab table td {
+border: 1px solid var(--border);
+padding: 8px;
+text-align: left;
+background-color: var(--transparent);
+  }
+  
+.deleteButton {
+background-color: white;
+color: black;
+border: none;
+padding: 5px 10px;
+cursor: pointer;
+}
+
+/* Tabs */
+.tabs{
+    margin:  auto;
+}
+
+.tabs ul {
+    list-style: none;
+    margin: 0;
+    padding-left:0;
+    display: flex;
+  }
+  
+  .tabs li {
+    margin: 0px;
+  }
+  
+  .tabs li a {
+    text-decoration: none;
+    color: var(--text-color);
+    padding: 5px;
+    border: 1px solid var(--border);
+    border-radius: 5px;
+    background-color: var(--transparent);
+  }
+  
+  .tabs li a.active {
+    background-color: white;
+    color: var(--transparent);
+  }
+
+  .reservations:has(#addHotelForm){
+    width:60%;
+    height:70vh;
+    background-color: var(--transparent);
+    border:none;
+    position: absolute;
+    top:0%;
+    left:0;
+    right:0;
+    }
+
+  #addHotelsTab {
+    display: none; /* Initially hidden */
+  }
+  
+  #addHotelForm {
+    margin-bottom: 20px;
+}
+
+#addHotelForm .fields{
+      display: flex;
+      justify-content: stretch;
+      margin-bottom: 5%;
+      align-items: end;
+    }    
+    
+  #addHotelForm fieldset {
+    border: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap:1%;
+    background-color: var(--transparent);
+    border-radius: 15px;
+    width: 100%;
+  }
+
+  #addHotelForm fieldset:has(#addRoomTypeButton){
+    background-color: transparent;
+  }
+  
+  #addHotelForm label {
+    font-size: 12pt;
+  }
+  
+  #addHotelForm input,  #addRoomTypeButton{
+    border: none;
+    border-radius: 10px;
+    padding: 2% 2%;
+    width: 100%;
+    font-size: 12pt; 
+  }
+  
+  #addHotelForm button {
+    background-color: var(--black);
+    color: white;
+    border: 1px solid grey;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+#addHotelForm button[type="submit"] {
+    padding: 10px 5px;
+    width: 80%;
+  }
+
+  #addRoomTypeButton{
+    margin-bottom: 10px;
+    font-size: 12pt;
+    width:50%;
+    height:100%;
+    padding:2%;
+  }
+
+  #roomTypeFields div {
+    display: flex;
+    width:50%;
+    margin: auto;
+    margin-bottom: 5px;
+    justify-content: center ;
+    column-gap: 10px;    
+  }
+ 
+  
+  #roomTypeFields input {
+    width: 50%;
+    padding: 3px 2px;
+  }
+  
+  #roomTypeFields .removeRoomTypeButton {
+    margin-left: 5px;
+    padding: 5px;
+    border: none;
+    background-color: #ff0000;
+    color: white;
+    cursor: pointer;
+  }
+
+/* media queries */
+@media only screen and (max-width: 500px){
+    :root{
+        font-size: 12pt;
+    }
+
+   header{
+    position:static;
+    width: 100vw;
+    justify-content: space-evenly;
+    column-gap: 7%;
+   }
+
+   /* for forms */
+   .fields{
+    grid-template-columns: 1fr;
+   }
+
+   .controls input{
+    font-size: 14pt;
+   } 
+}

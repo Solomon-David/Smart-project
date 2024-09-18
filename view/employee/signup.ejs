@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign Up | Smart Hotels </title>
+  <link rel="stylesheet" href="./../styles/main.css">
+  <link rel="stylesheet" href="./../assets/css/all.css">
+</head>
+<body class="picbg">
+  <header></header>
+  <div class="form_cont">
+    <form id="signupForm">
+      <div class="caption"><span>create</span> a new account</div>
+
+      <div class="fields">
+        <fieldset class="fname">
+          <label for="fname">First Name</label>
+          <input type="text" id="fname" name="first_name" required/>
+        </fieldset>
+
+        <fieldset class="lname">
+          <label for="lname">Last Name</label>
+          <input type="text" id="lname" name="last_name" required/>
+        </fieldset>
+
+        <fieldset class="phone">
+          <label for="phone">Phone</label>
+          <input type="tel" name="phone" id="phone" required/>
+        </fieldset>
+
+        <fieldset class="password">
+          <label for="password">Password</label>
+          <div>
+            <input type="password" name="password" required id="passwordInput"/>
+            <button type="button" class="fa fa-eye-slash" id="passwordToggle"></button>
+          </div>
+        </fieldset>
+      </div>
+
+      <div class="controls">
+        <input type="submit" value="Sign Up">
+      </div>
+    </form>
+  </div>
+
+  <%- include("./../partials/footer.ejs") %>
+
+  <script>
+    const signupForm = document.getElementById('signupForm');
+    const passwordInput = document.getElementById('passwordInput');
+    const passwordToggle = document.getElementById('passwordToggle');
+
+    signupForm.addEventListener('submit', async (event) => {
+      event.preventDefault();
+
+      const formData = new FormData(signupForm);
+      const data = Object.fromEntries(formData.entries());
+        console.log(data);
+      try {
+        const response = await fetch('/admin/signup', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(data)
+        });
+
+        if (response.ok) {
+          const responseData = await response.json();
+          console.log(responseData); // Handle successful signup, e.g., redirect to login page
+          window.location.href = './login'; // Replace with your actual login page URL
+        } else {
+          const errorData = await response.json();
+          console.error(errorData);
+          // Handle error, e.g., display error message to user
+          alert(errorData.message);
+        }
+      } catch (error) {
+        console.error('Error:', error);
+        // Handle network or other errors
+      }
+    });
+
+    passwordToggle.addEventListener('click', () => {
+      if (passwordInput.type === 'password') {
+        passwordInput.type = 'text';
+        passwordToggle.classList.remove('fa-eye-slash');
+        passwordToggle.classList.add('fa-eye');
+      } else {
+        passwordInput.type = 'password';
+        passwordToggle.classList.remove('fa-eye');
+        passwordToggle.classList.add('fa-eye-slash');
+      }
+    });
+  </script>
+</body>
+</html>

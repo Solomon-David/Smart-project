@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Log in | Smart Hotels </title>
+  <link rel="stylesheet" href="./../styles/main.css">
+  <link rel="stylesheet" href="./../assets/css/all.css">
+</head>
+<body class="picbg">
+  <div class="form_cont info">
+    <form method="post" >
+      <div class="caption"><span>log into</span> your account</div>
+
+      <div class="fields">
+        <fieldset class="phone">
+          <label for="phone">Phone Number</label>
+          <input type="tel" name="phone" required/>
+        </fieldset>
+
+        <fieldset class="password">
+          <label for="password">Password</label>
+          <div>
+            <input type="password" name="password" required/>
+            <button type="button" class="fa fa-eye-slash"></button>
+          </div>
+        </fieldset>
+      </div>
+
+      <div class="controls">
+        <input type="submit" value="Login">
+      </div>
+      <div style="font-size: 0.7em;">Don't have an account? <a href="/admin/signup">Sign Up</a></div>
+    </form>
+  </div>
+
+  <%- include("./../partials/footer.ejs") %>
+
+  <script>
+    // ... rest of your JavaScript code
+  </script>
+</body>
+</html>
