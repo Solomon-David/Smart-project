@@ -5,7 +5,7 @@ class Room {
   static async createRoom(roomType, price, roomNr, hotel) {
     try {
       const [result] = await query(
-        'INSERT INTO room (ROOM_TYPE, PRICE, ROOM_NR, HOTEL) VALUES (?, ?, ?, ?)',
+        'INSERT INTO ROOM (ROOM_TYPE, PRICE, ROOM_NR, HOTEL) VALUES (?, ?, ?, ?)',
         [roomType, price, JSON.stringify(roomNr), hotel]
       );
       return result.insertId;
@@ -19,7 +19,7 @@ class Room {
   static async getRoomsByHotelName(name) {
     try {
       const [rows] = await query(
-        'SELECT * FROM room WHERE HOTEL = ?',
+        'SELECT * FROM ROOM WHERE HOTEL = ?',
         [name]
       );
       rows.forEach(row => {
@@ -36,7 +36,7 @@ class Room {
   // Retrieves all rooms in the database
   static async getAllRooms() {
     try {
-      const [rows] = await query('SELECT * FROM room');
+      const [rows] = await query('SELECT * FROM ROOM');
       rows.forEach(row => {
         
         row.ROOM_NR = JSON.parse(row.ROOM_NR);
