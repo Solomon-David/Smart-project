@@ -8,7 +8,7 @@ class Employee{
           const hashedPassword = await bcrypt.hash(password, 10);
           
           console.log(first_name,last_name,phone,password);
-          const result = await query('INSERT INTO EMPLOYEE(first_name, last_name, phone, password) VALUES (?, ?, ?, ?);', [first_name, last_name, phone, hashedPassword]);
+          const result = await query('INSERT INTO EMPLOYEES(first_name, last_name, phone, password) VALUES (?, ?, ?, ?);', [first_name, last_name, phone, hashedPassword]);
           console.log(result);
           return result.insertId;
         } catch (error) {
@@ -20,7 +20,7 @@ class Employee{
       static async findByPhoneAndPassword(phone, password) {
         try {
             // this part is broken 
-            let user = await query('SELECT * FROM EMPLOYEE WHERE phone = ? limit 1;', [phone]);
+            let user = await query('SELECT * FROM EMPLOYEES WHERE phone = ? limit 1;', [phone]);
             user = user[0][0];
             console.log(user);
             if (!user || !(await bcrypt.compare(password, user.PASSWORD))) {
@@ -35,7 +35,7 @@ class Employee{
 
       static async findById(id) {
         try {
-          const [rows] = await query('SELECT * FROM EMPLOYEE WHERE employee_id = ?', [id]);
+          const [rows] = await query('SELECT * FROM EMPLOYEES WHERE employee_id = ?', [id]);
           return rows[0];
         } catch (error) {
           console.error('Error finding employee by id:', error);
