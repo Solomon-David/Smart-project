@@ -1,11 +1,17 @@
 const mysql = require('mysql2/promise');
 let connection;
 async function testConn() {
+  // connection = await mysql.createConnection({
+  //   host: 'sql8.freemysqlhosting.net',
+  //   user: 'sql8732065',
+  //   password: 'UjhQ9FPcYl',
+  //   database: 'sql8732065'
+  // });
   connection = await mysql.createConnection({
-    host: 'sql8.freemysqlhosting.net',
-    user: 'sql8732065',
-    password: 'UjhQ9FPcYl',
-    database: 'sql8732065'
+    host: '173.236.63.6',
+    user: 'rsucmsco_joseph4290',
+    password: 'rsucmsco_joseph4290',
+    database: 'rsucmsco_joseph4290'
   });
 
   try {
