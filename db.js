@@ -8,9 +8,7 @@ async function testConn() {
   //   database: 'sql8732065'
   // });
   connection = await mysql.createConnection({
-    host: '[100.20.92.101
-44.225.181.72
-44.227.217.144]',
+    host: 'chir104.websitehostserver.net',
     user: 'rsucmsco_joseph4290',
     password: 'rsucmsco_joseph4290',
     database: 'rsucmsco_joseph4290'
