@@ -3,14 +3,10 @@ let pool;
 
 async function initPool() {
   pool = mysql.createPool({
-    // host: 'chir104.websitehostserver.net',
-    // user: 'rsucmsco_joseph4290',
-    // password: 'rsucmsco_joseph4290',
-    // database: 'rsucmsco_joseph4290',
-    host: 'localhost',
-    user: 'Smart',
-    password: 'Uchenna',
-    database: 'smart_hotel',
+     host: 'chir104.websitehostserver.net',
+     user: 'rsucmsco_joseph4290',
+     password: 'rsucmsco_joseph4290',
+     database: 'rsucmsco_joseph4290',
     waitForConnections: true,
     connectionLimit: 10, // Max number of connections in the pool
     queueLimit: 0, // Unlimited queue limit
