@@ -15,16 +15,17 @@
         </div>
         <div class="center">Welcome to <span>Smart Hotels</span></div>
         <div class="right">
-            <span>
+            <span id="right">
                 <span class="fas fa-user"></span>
-                <span>Account</span>
-                <span class="fas fa-caret-up"></span>
-                <span class="fas fa-caret-down"></span>
+                <span >Account</span>
+                <span id="fas1" class="fas fa-caret-up visible"></span>
+                <span   id="fas2" class="fas fa-caret-down "></span>
             </span>
     <ul id="account_ops">
                 <li>
                     <a href="./signup">Sign Up</a>
                 </li>
+
                 <li>
                     <a href="./login">Login</a>
                 </li>
@@ -37,6 +38,20 @@
     
    <%- include("partials/footer.ejs") %>
 
-    
+
+    <script>
+        var right = document.querySelector("#right");
+        var fas1 = document.querySelector("#fas1");
+        var fas2= document.querySelector("#fas2");
+        var account_ops = document.querySelector("#account_ops");
+
+        right.addEventListener("click", function(){
+            
+            fas1.classList.toggle("visible");
+            fas2.classList.toggle("visible");
+            account_ops.classList.toggle("visible");
+        })
+        
+    </script>
 </body>
 </html>

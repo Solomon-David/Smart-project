@@ -96,11 +96,10 @@ line{
 .right{
     display: flex;
     flex-direction: column;
-    justify-content: center;
 }
 
 #account_ops{
-    visibility: hidden;
+    visibility:hidden;
     list-style: none;
      margin-top:0;
      display: flex;
@@ -118,23 +117,11 @@ line{
     color:var(--transparent);
 }
 
-.right:hover #account_ops{
-    visibility: visible;
+.fa-caret-up::before, .fa-caret-down::before{
+    visibility: hidden;
 }
-
-.fa-caret-up::before{
-    display: inline;
-}
-
-.fa-caret-down::before{
-    display: none;
-}
-
-.right:hover .fa-caret-up::before{
-    display: none;
-}
-.right:hover .fa-caret-down::before{
-    display: inline;
+.visible, .visible::before{
+    visibility: visible !important; 
 }
 
 /* for nav bar */
@@ -142,7 +129,6 @@ line{
     transition: transform 0.5s, display 0s;
     top:1vh;
     display: block;
-    width:20vw;
     position:fixed;
     padding:2vh 0.1vw;
     background-color: var(--transparent);
@@ -363,6 +349,10 @@ section{
 }
 
 /* for dialog */
+#bookingDialog{
+    width:80vw;
+}
+
 #bookingDialog form{
     display:flex;
     flex-direction: column;
@@ -409,8 +399,6 @@ section{
     display:grid;
     grid-template-rows: 1fr 3fr;
 }
-
-
 
 #findHotelsTab table {
     border-collapse: collapse;
@@ -465,7 +453,9 @@ cursor: pointer;
   }
 
   .reservations:has(#addHotelForm){
-    width:60%;
+    transform: scale(0.8);
+    margin: auto;
+    max-width:100%;
     height:70vh;
     background-color: var(--transparent);
     border:none;
@@ -546,10 +536,9 @@ cursor: pointer;
     justify-content: center ;
     column-gap: 10px;    
   }
- 
   
   #roomTypeFields input {
-    width: 50%;
+    width: 4em;
     padding: 3px 2px;
   }
   
@@ -583,4 +572,119 @@ cursor: pointer;
    .controls input{
     font-size: 14pt;
    } 
+}
+
+@media only screen and (max-width: 500px) {
+    /* Reduce font size for smaller screens */
+    :root {
+        font-size: 12pt;
+    }
+
+    .password .fa{
+        bottom:10%;
+    }
+
+    /* Make header and footer more compact */
+    header {
+        position: static;
+        width: 100vw;
+        justify-content: space-evenly;
+        column-gap: 7%;
+    }
+
+    footer {
+        width: 95vw;
+        left: 2.5vw;
+    }
+
+    /* Stack elements in forms and reduce padding */
+    .fields {
+        grid-template-columns: 1fr;
+    }
+
+    .controls input {
+        font-size: 14pt;
+        width: 90%; /* Increase width for easier touch input */
+    }
+
+    /* For booking forms, ensure proper resizing */
+    .form_cont form {
+        width: 80%; /* Ensure form takes more space */
+        left: 10%;
+    }
+
+    .info form {
+        width: 80%;
+        left: 10%;
+    }
+
+    /* For tables, make them scrollable on mobile */
+    table {
+        width: 100%; /* Ensure tables adapt to screen width */
+        display: block;
+        overflow-x: auto;
+    }
+
+    .reservations {
+        width: 85vw;
+        margin: 0;
+    }
+
+    /* Dialog adjustments */
+    #bookingDialog form {
+        width: 90vw; /* Make the dialog form width adapt to mobile */
+    }
+
+    /* Make buttons more touch-friendly */
+    button, #addRoomTypeButton {
+        padding: 10px;
+        font-size: 1rem;
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    /* For tablets and medium screens */
+    :root {
+        font-size: 14pt; /* Slightly larger text for medium screens */
+    }
+
+    header {
+        width: 98vw;
+        justify-content: space-between;
+    }
+
+    .fields {
+        grid-template-columns: 1fr;
+    }
+
+    .form_cont:not(.info) form {
+        width: 70%; /* Larger forms on tablets */
+        left: 15%;
+    }
+
+    .info form {
+        width: 50%;
+        left: 25%;
+    }
+
+    /* Adjust table and content areas */
+    .reservations {
+        margin:auto;
+        width: max-content;
+    }
+
+    #bookingDialog form {
+        width: 60vw;
+    }
+
+    /* Adjust tab buttons for tablets */
+    .tabs li a {
+        padding: 10px;
+        font-size: 1.1rem;
+    }
+
+    button, #addRoomTypeButton {
+        padding: 10px;
+        font-size: 1.1rem;
+    }
 }

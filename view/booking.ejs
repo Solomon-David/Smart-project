@@ -24,6 +24,7 @@
             <h3>select a room type</h3>
             <fieldset class="find">
                         <select >
+                            <option></option>
                             <% for (let hotel of hotels) { %>
                             <option value="<%= hotel %>"> <%=hotel %></option>
                             <% } %>
@@ -73,7 +74,7 @@
 
     <dialog id="bookingDialog">
         <form>
-          <p>You booked a <span id="roomType"></span> room, <span id="roomNumber"></span>, from <span id="hotel"></span> hotels for N<span id="price"></span> per day</p>
+          <p>You booked a <span id="roomType"></span> room from <span id="hotel"></span> hotels for N<span id="price"></span> per day</p>
           
           <div>
               <fieldset>
@@ -119,7 +120,7 @@
         let roomnum=rooms[Math.floor(Math.random() * rooms.length)];
 
         dialog.querySelector('#roomType').textContent = type;
-        dialog.querySelector('#roomNumber').textContent = roomnum;
+        
         dialog.querySelector('#hotel').textContent = hotel.HOTEL_NAME;
         dialog.querySelector('#price').textContent = price;
         let checkIn=dialog.querySelector("#checkIn").value;

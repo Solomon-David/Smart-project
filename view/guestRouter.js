@@ -9,7 +9,6 @@ const jwt=require("jsonwebtoken");
 const cookieparser=require("cookie-parser");
 const errorHandler = require("./../guestErrHandler");
 
-
 router.use(express.json());
 router.use(express.urlencoded({extended:true}));
 router.use(cookieparser());
